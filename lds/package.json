@@ -1,0 +1,23 @@
+{
+  "name": "lds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc App.ts && node App.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/uuid": "^9.0.6",
+    "fs": "^0.0.1-security",
+    "geolib": "^3.3.1",
+    "mqtt": "^5.1.2",
+    "path": "^0.12.7",
+    "readline": "^1.3.0",
+    "typescript": "^5.2.2",
+    "uuid": "^9.0.1"
+  }
+}
