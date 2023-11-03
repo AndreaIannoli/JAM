@@ -71,10 +71,10 @@ export class SpatialMQTTClient extends MQTTClient  {
         let position: Position=new Position(latitude, longitude);
         const topicN: string = MQTTSpatialMessages.TOPIC_PUBLISH_GEOFENCE;
         let messageN: string= "{ "+position.toString()+", \"id\": \""+geofenceId+"\"";
-        messageN=messageN+", \"radius\": "+radius+", \"message\": \""+message+"\", \"topicGeofence\": \""+topic+'\" }';
+        messageN=messageN+", \"radius\": "+radius+", \"message\": \""+message+"\", \"topicGeofence\": \""+topic+'\", \"notifiedBrokers\": []}';
 	//await this.publish(topic, messageN);
         //HHH
-	await this.publish(topicN, messageN);
+	console.log(await this.publish(topicN, messageN));
         //this.mqttMeasurer.trackGeofencePublish();
     }
 
