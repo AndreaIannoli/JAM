@@ -40,11 +40,14 @@ var LDSClientService_1 = require("./LDSClientService");
 var LDSReceiver_1 = require("./LDSReceiver");
 var readline = require("readline");
 var fs = require("fs");
-if (process.argv.length !== 3) {
-    console.error('Usage: npm start <file-path>');
+var uuid_1 = require("uuid");
+var smqttclient_1 = require("./la-mqtt/client/smqttclient");
+if (process.argv.length !== 4) {
+    console.error('Usage: npm start <broker-address> <lds-conf-path>');
     process.exit(1);
 }
-var filePath = process.argv[2];
+var brokerAddress = process.argv[2];
+var filePath = process.argv[3];
 function readFileAsJSON(filePath) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filePath, 'utf8', function (err, data) {
@@ -68,7 +71,7 @@ var rl = readline.createInterface({
 });
 function start() {
     return __awaiter(this, void 0, void 0, function () {
-        var configuration;
+        var configuration, clientId, lamqttClient;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -93,28 +96,27 @@ function start() {
                     }); })()];
                 case 1:
                     configuration = _a.sent();
-                    return [4 /*yield*/, (0, LDSClientService_1.clientConnection)()
-                        //await lamqttClient.publicGeofence(44.49987328047904, 11.350508941159259, 300, "parking", "Via Irnerio-free", clientId);
-                        // @ts-ignore
-                    ];
+                    clientId = 'LDS-CLIENT-' + (0, uuid_1.v4)();
+                    lamqttClient = new smqttclient_1.SpatialMQTTClient('', '', 'ws://' + brokerAddress + '/', parseInt(brokerAddress.split(':')[1]), clientId);
+                    return [4 /*yield*/, (0, LDSClientService_1.clientConnection)(lamqttClient)];
                 case 2:
                     _a.sent();
                     //await lamqttClient.publicGeofence(44.49987328047904, 11.350508941159259, 300, "parking", "Via Irnerio-free", clientId);
                     // @ts-ignore
-                    LDSClientService_1.lamqttClient.setCallback(LDSReceiver_1.LDSReceiver);
-                    askForParkingInput(configuration);
+                    lamqttClient.setCallback(LDSReceiver_1.LDSReceiver);
+                    askForParkingInput(configuration, lamqttClient, clientId);
                     return [2 /*return*/];
             }
         });
     });
 }
 start();
-function askForParkingInput(configuration) {
+function askForParkingInput(configuration, lamqttClient, clientId) {
     var _this = this;
     rl.question('Take an action as LDS:\n1 - Notify free parking area\n2 - Notify almost full parking area\n3 - Notify full parking area\n', function (choice) { return __awaiter(_this, void 0, void 0, function () {
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var _a, _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     _a = choice;
                     switch (_a) {
@@ -123,23 +125,26 @@ function askForParkingInput(configuration) {
                         case "3": return [3 /*break*/, 5];
                     }
                     return [3 /*break*/, 7];
-                case 1: return [4 /*yield*/, LDSClientService_1.lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-free", LDSClientService_1.clientId)];
+                case 1:
+                    _c = (_b = console).log;
+                    return [4 /*yield*/, lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-free", clientId)];
                 case 2:
-                    _b.sent();
+                    _c.apply(_b, [_d.sent()]);
+                    console.log('published');
                     return [3 /*break*/, 8];
-                case 3: return [4 /*yield*/, LDSClientService_1.lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-almost full", LDSClientService_1.clientId)];
+                case 3: return [4 /*yield*/, lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-almost full", clientId)];
                 case 4:
-                    _b.sent();
+                    _d.sent();
                     return [3 /*break*/, 8];
-                case 5: return [4 /*yield*/, LDSClientService_1.lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-full", LDSClientService_1.clientId)];
+                case 5: return [4 /*yield*/, lamqttClient.publicGeofence(configuration.latCenter, configuration.lngCenter, 300, "parking", configuration.streetName + "-" + configuration.latStart + "-" + configuration.lngStart + "-" + configuration.latEnd + "-" + configuration.lngEnd + "-full", clientId)];
                 case 6:
-                    _b.sent();
+                    _d.sent();
                     return [3 /*break*/, 8];
                 case 7:
                     console.error("Command not found");
-                    _b.label = 8;
+                    _d.label = 8;
                 case 8:
-                    askForParkingInput(configuration);
+                    askForParkingInput(configuration, lamqttClient, clientId);
                     return [2 /*return*/];
             }
         });
