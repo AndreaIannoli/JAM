@@ -10,7 +10,6 @@ export async function createDefaultUserFields(userUUID) {
     const usersRef = doc(FIREBASE_FIRESTORE, "users", userUUID);
     try {
         await setDoc(usersRef, {
-            language: "",
             favourites: [],
             notifications: {},
             notificationsAlert: true
@@ -18,31 +17,6 @@ export async function createDefaultUserFields(userUUID) {
         console.log('Default user document added successfully.');
     } catch (error) {
         console.error('Error adding default user document:', error);
-    }
-}
-
-export async function changeUserLanguagePref(value) {
-    const userRef = doc(FIREBASE_FIRESTORE, "users", FIREBASE_AUTH.currentUser.uid);
-    await updateDoc(userRef, {language: value});
-}
-
-export async function getUserLanguagePref() {
-    const currentUser= FIREBASE_AUTH.currentUser;
-    if (currentUser) {
-        try {
-            const userRef = doc(FIREBASE_FIRESTORE, "users", currentUser.uid);
-            const userDoc = await getDoc(userRef);
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                return userData.language;
-            } else {
-                console.log("User document not found");
-            }
-        } catch (error) {
-            console.error("Error getting user document:", error);
-        }
-    } else {
-        console.log("No user is currently signed in.");
     }
 }
 

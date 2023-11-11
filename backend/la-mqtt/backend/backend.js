@@ -58,14 +58,14 @@ var geoprocesser_1 = require("./geoprocesser");
 var ipersister_1 = require("./ipersister");
 var SpatialMQTTBackEnd = /** @class */ (function (_super) {
     __extends(SpatialMQTTBackEnd, _super);
-    function SpatialMQTTBackEnd(username, password, host, port) {
-        var _this = _super.call(this, username, password, host, port, SpatialMQTTBackEnd.DEFAULT_NAME) || this;
+    function SpatialMQTTBackEnd(username, password, host, port, brokerConf) {
+        var _this = _super.call(this, username, password, 'ws://' + host + ':' + port + '/', port, SpatialMQTTBackEnd.DEFAULT_NAME + '-' + host.split('.').join('') + "-" + port) || this;
         _this.persisterType = ipersister_1.PersisterType.MONGODB;
         // @ts-ignore
         if (_this.persisterType == ipersister_1.PersisterType.MEMORY)
             _this.persister = new mempersister_1.MemPersister();
         else
-            _this.persister = new persister_1.Persister(SpatialMQTTBackEnd.STORAGE_NAME);
+            _this.persister = new persister_1.Persister(SpatialMQTTBackEnd.STORAGE_NAME + '-' + host.split('.').join('') + "-" + port);
         //this.logWatcher=new MosquittoWatcher('/Users/marcodifelice/Documents/Lavoro/ProgettiSW/SpatialMQTT/src/backend','log.txt');
         _this.geoProcessor = new geoprocesser_1.GeoProcessor(_this.persister, _this);
         // @ts-ignore
@@ -73,33 +73,48 @@ var SpatialMQTTBackEnd = /** @class */ (function (_super) {
         // @ts-ignore
         _this.historyNotificationSent = new Map();
         _this.verboseMode = true;
+        // @ts-ignore
+        _this.adjacentBrokers = brokerConf.bridgedBrokers;
+        _this.host = host + ':' + port;
         return _this;
     }
     SpatialMQTTBackEnd.prototype.start = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var res;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var res, _i, _a, aBroker;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0: return [4 /*yield*/, this.connect()];
                     case 1:
-                        res = _a.sent();
+                        res = _b.sent();
                         console.log("CONNECTION RESULT: ", res);
-                        if (!(res == true)) return [3 /*break*/, 6];
+                        if (!(res == true)) return [3 /*break*/, 10];
                         this.setCallback(this);
                         return [4 /*yield*/, this.subscribe(messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_POSITION)];
                     case 2:
-                        _a.sent();
+                        _b.sent();
                         return [4 /*yield*/, this.subscribe(messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_GEOFENCE)];
                     case 3:
-                        _a.sent();
+                        _b.sent();
                         return [4 /*yield*/, this.subscribe(messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_SUBSCRIPTION)];
                     case 4:
-                        _a.sent();
-                        return [4 /*yield*/, this.persister.connect()];
+                        _b.sent();
+                        _i = 0, _a = this.adjacentBrokers;
+                        _b.label = 5;
                     case 5:
-                        _a.sent();
-                        _a.label = 6;
-                    case 6: return [2 /*return*/];
+                        if (!(_i < _a.length)) return [3 /*break*/, 8];
+                        aBroker = _a[_i];
+                        return [4 /*yield*/, this.subscribe('bridgeFrom' + aBroker + 'To' + this.host)];
+                    case 6:
+                        _b.sent();
+                        _b.label = 7;
+                    case 7:
+                        _i++;
+                        return [3 /*break*/, 5];
+                    case 8: return [4 /*yield*/, this.persister.connect()];
+                    case 9:
+                        _b.sent();
+                        _b.label = 10;
+                    case 10: return [2 /*return*/];
                 }
             });
         });
@@ -130,20 +145,43 @@ var SpatialMQTTBackEnd = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.handlePositionUpdate(msg.message)];
                     case 1:
                         _a.sent();
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 2:
                         if (!(msg.topic == messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_GEOFENCE)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.handleGeofenceUpdate(msg.message)];
                     case 3:
                         _a.sent();
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 4:
                         if (!(msg.topic == messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_SUBSCRIPTION)) return [3 /*break*/, 6];
                         return [4 /*yield*/, this.handleSubscriptionUpdate(msg.message)];
                     case 5:
                         _a.sent();
-                        _a.label = 6;
-                    case 6: return [2 /*return*/];
+                        return [3 /*break*/, 8];
+                    case 6:
+                        if (!(msg.topic.substring(0, 6) == messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_BRIDGE)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, this.handleBridgeUpdate(msg.message)];
+                    case 7:
+                        _a.sent();
+                        _a.label = 8;
+                    case 8: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // @ts-ignore
+    SpatialMQTTBackEnd.prototype.handleBridgeUpdate = function (payload) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (this.verboseMode == true) {
+                            console.log("[BACKEND] Received UPDATE FROM BRIDGE: " + payload);
+                        }
+                        return [4 /*yield*/, this.handleGeofenceUpdate(payload)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
@@ -175,9 +213,9 @@ var SpatialMQTTBackEnd = /** @class */ (function (_super) {
     // @ts-ignore
     SpatialMQTTBackEnd.prototype.handleGeofenceUpdate = function (payload) {
         return __awaiter(this, void 0, void 0, function () {
-            var objJSON, seqNo;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var objJSON, seqNo, alreadyNotifiedBroker, _i, _a, aBroker;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         if (this.verboseMode == true) {
                             console.log("[BACKEND] Received UPDATE GEOFENCE: " + payload);
@@ -192,8 +230,29 @@ var SpatialMQTTBackEnd = /** @class */ (function (_super) {
                         console.log("SEQUENTIAL:", this.historyGeofence.get(objJSON["id"]));
                         return [4 /*yield*/, this.persister.addGeofence(objJSON["topicGeofence"], objJSON["id"], objJSON["latitude"], objJSON["longitude"], objJSON["radius"], objJSON["message"])];
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                        _b.sent();
+                        alreadyNotifiedBroker = objJSON['notifiedBrokers'];
+                        // This if should be run only by the first backend
+                        if (!objJSON['notifiedBrokers'].includes(this.host)) {
+                            objJSON['notifiedBrokers'].push(this.host);
+                        }
+                        objJSON['notifiedBrokers'] = objJSON['notifiedBrokers'].concat(this.adjacentBrokers).filter(function (value, index, self) {
+                            return self.indexOf(value) === index;
+                        });
+                        _i = 0, _a = this.adjacentBrokers;
+                        _b.label = 2;
+                    case 2:
+                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        aBroker = _a[_i];
+                        if (!!alreadyNotifiedBroker.includes(aBroker)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.publish(messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_BRIDGE + 'From' + this.host + 'To' + aBroker, JSON.stringify(objJSON))];
+                    case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

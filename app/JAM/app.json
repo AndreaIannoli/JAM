@@ -32,11 +32,8 @@
     },
     "extra": {
       "eas": {
-        "projectId": "48b63522-6fb0-42e2-960f-61b810903e9d"
+        "projectId" : "48b63522-6fb0-42e2-960f-61b810903e9d"
       }
-    },
-    "plugins": [
-      "expo-localization"
-    ]
+    }
   }
 }

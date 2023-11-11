@@ -3,21 +3,20 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {FIREBASE_AUTH, FIREBASE_DB} from "../config/FirebaseConfig";
 import uuid from "react-native-uuid";
 import {createDefaultUserFields} from "./UserService";
-import i18n from "../services/i18n";
 
 export async function signUp(auth, credentials, setCredentials, image, navigation) {
     console.log(credentials);
     if(credentials.password !== credentials.confirmPass) {
         setCredentials({
             ...credentials,
-            error: i18n.t("passwordDoNotMatch")
+            error: 'Le password non corrispondono'
         })
         return;
     }
     if(credentials.email === '' || credentials.password === '' || credentials.confirmPass === '' || credentials.displayName === '') {
         setCredentials({
             ...credentials,
-            error: i18n.t("allFields")
+            error: 'Compilare tutti i campi'
         })
         return;
     }
@@ -30,34 +29,10 @@ export async function signUp(auth, credentials, setCredentials, image, navigatio
         });
         await createDefaultUserFields(FIREBASE_AUTH.currentUser.uid);
     } catch (error) {
-        console.log(error.code);
-        switch (error.code) {
-            case 'auth/email-already-in-use':
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("alreadyInUseEmail"),
-                });
-                break;
-            case 'auth/invalid-email':
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("invalidEmailAddress"),
-                });
-                break;
-            case 'auth/weak-password':
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("weakPassword"),
-                });
-                break;
-
-            default:
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("genericError"),
-                });
-                break;
-        }
+        setCredentials({
+            ...credentials,
+            error: error.message,
+        })
     }
 }
 
@@ -65,7 +40,7 @@ export async function signIn(auth, credentials, setCredentials, navigation) {
     if (credentials.email === "" || credentials.password === "") {
         setCredentials({
             ...credentials,
-            error: i18n.t("allFields"),
+            error: "La password e la mail sono obbligatorie",
         });
         return;
     }
@@ -73,46 +48,10 @@ export async function signIn(auth, credentials, setCredentials, navigation) {
     try {
         await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
     } catch (error) {
-        console.log(error.code);
-        switch (error.code) {
-            case "auth/invalid-email":
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("invalidEmailAddress"),
-                });
-                break;
-            case "auth/user-disabled":
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("userAccountDisabled"),
-                });
-                break;
-            case "auth/user-not-found":
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("userNotFound"),
-                });
-                break;
-            case "auth/wrong-password":
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("incorrectPassword"),
-                });
-                break;
-            case "auth/invalid-login-credentials":
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("invalidCredentials"),
-                });
-                break;
-
-            default:
-                setCredentials({
-                    ...credentials,
-                    error: i18n.t("genericError"),
-                });
-                break;
-        }
+        setCredentials({
+            ...credentials,
+            error: error.message,
+        });
     }
 }
 

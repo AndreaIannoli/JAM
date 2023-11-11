@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {Button, Image, View, Platform, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {Colors} from "../res/Colors";
-import {useTranslation} from "react-i18next";
 
 export default function ImagePickerBox({image, setImage}) {
-    const { t } = useTranslation();
 
     const styles = StyleSheet.create({
         imagePickerContainer: {
@@ -54,7 +52,7 @@ export default function ImagePickerBox({image, setImage}) {
                 {image ?
                     <Image source={{ uri: image }} style={styles.imagePickerImg} />
                     :
-                    <Text style={styles.imagePickerText}>{t('profilePicPlaceHolder')}</Text>
+                    <Text style={styles.imagePickerText}>Immagine profilo</Text>
                 }
             </TouchableOpacity>
         </View>

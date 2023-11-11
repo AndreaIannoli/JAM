@@ -5,13 +5,12 @@ import {useContext, useEffect, useState} from "react";
 import {getUserFavourites} from "../services/UserService";
 import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import {getStatusComponent} from "../services/StreetService";
-import {useTranslation} from "react-i18next";
 
 function Favourites({navigation}){
     const [favs, setFavs] = useState([])
     const [filteredFavs, setFilteredFavs] = useState([])
     const { streetsInfos, updateFavs } = useContext(StreetsInfosContext);
-    const { t } = useTranslation();
+
     function getDotColor(status) {
         if(status === 'free') {
             return Colors.green;
@@ -96,10 +95,10 @@ function Favourites({navigation}){
             <View style={styles.streetsContainer}>
                 <FlatList
                     data={favs}
-                    renderItem={({item}) => <Item title={item} status={streetsInfos.get(item) ? streetsInfos.get(item).status : null}/>}
+                    renderItem={({item}) => <Item title={item} status={streetsInfos.get(item)? streetsInfos.get(item).status : null}/>}
                     ItemSeparatorComponent={StreetsItemSeparator}
                     KeyExtractor={({item}) => item.title}
-                    ListEmptyComponent={() => {return(<Text style={styles.emptyText}>{t('emptyFavourites')}</Text>)}}
+                    ListEmptyComponent={() => {return(<Text style={styles.emptyText}>Aggiungi le strade di tuo interesse ai preferiti per visualizzarle facilmente e ricevere aggiornamenti</Text>)}}
                 />
             </View>
         </View>

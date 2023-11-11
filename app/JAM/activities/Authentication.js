@@ -19,7 +19,6 @@ import {Ionicons} from "@expo/vector-icons";
 import {signIn, signUp} from "../services/AuthService";
 import {FIREBASE_AUTH, FIREBASE_DB} from "../config/FirebaseConfig";
 import ImagePickerBox from "../components/ImagePickerBox";
-import {useTranslation} from "react-i18next";
 
 function Authentication({navigation}){
     const windowHeight = useWindowDimensions().height;
@@ -40,7 +39,6 @@ function Authentication({navigation}){
         error: ''
     });
     const auth = FIREBASE_AUTH;
-    const { t } = useTranslation();
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -127,7 +125,7 @@ function Authentication({navigation}){
                                     editable
                                     inputMode="email"
                                     autoComplete="email"
-                                    placeholder={t('emailPlaceHolder')}
+                                    placeholder="Email"
                                     cursorColor={Colors.primary}
                                     placeholderTextColor={Colors.grey}
                                     style={[styles.textInput, {marginTop: 20}]}
@@ -141,7 +139,7 @@ function Authentication({navigation}){
                                         value={password}
                                         inputMode="text"
                                         autoComplete="password"
-                                        placeholder={t('passwordPlaceHolder')}
+                                        placeholder="Password"
                                         cursorColor={Colors.primary}
                                         placeholderTextColor={Colors.grey}
                                         style={[styles.textInput, {paddingHorizontal: 0}]}
@@ -158,7 +156,7 @@ function Authentication({navigation}){
                                 <PrimaryButton title="Login" onPress={() => {signIn(auth, loginCredentials, setLoginCredentials, navigation)}}/>
                                 {loginCredentials.error ? <Text style={styles.error}>{loginCredentials.error}</Text> : null}
                                 <Pressable hitSlop={3} style={{marginTop: 10}}>
-                                    <Text style={styles.forgotPassText}>{t('passwordForgotLink')}</Text>
+                                    <Text style={styles.forgotPassText}>Hai dimenticato la password?</Text>
                                 </Pressable>
                             </View>
                             :
@@ -168,7 +166,7 @@ function Authentication({navigation}){
                                     editable
                                     inputMode="email"
                                     autoComplete="email"
-                                    placeholder={t('emailPlaceHolder')}
+                                    placeholder="Email"
                                     cursorColor={Colors.primary}
                                     placeholderTextColor={Colors.grey}
                                     style={[styles.textInput,  {marginTop: 20}]}
@@ -178,7 +176,7 @@ function Authentication({navigation}){
                                     editable
                                     inputMode="text"
                                     autoComplete="username"
-                                    placeholder={t('namePlaceHolder')}
+                                    placeholder="Nome"
                                     cursorColor={Colors.primary}
                                     placeholderTextColor={Colors.grey}
                                     style={[styles.textInput,  {marginTop: 20}]}
@@ -189,7 +187,7 @@ function Authentication({navigation}){
                                     secureTextEntry={true}
                                     inputMode="text"
                                     autoComplete="password"
-                                    placeholder={t('passwordPlaceHolder')}
+                                    placeholder="Password"
                                     cursorColor={Colors.primary}
                                     placeholderTextColor={Colors.grey}
                                     style={[styles.textInput, {marginTop: 20}]}
@@ -200,13 +198,13 @@ function Authentication({navigation}){
                                     secureTextEntry={true}
                                     inputMode="text"
                                     autoComplete="password"
-                                    placeholder={t('confirmPasswordPlaceHolder')}
+                                    placeholder="Conferma password"
                                     cursorColor={Colors.primary}
                                     placeholderTextColor={Colors.grey}
                                     style={[styles.textInput, {marginTop: 20}, {marginBottom: 60}]}
                                     onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, confirmPass: text })}
                                 />
-                                <PrimaryButton title={t('registerBtn')} onPress={() => {
+                                <PrimaryButton title="Registrati" onPress={() => {
                                     signUp(auth, registrationCredentials, setRegistrationCredentials, image, navigation);
                                 }}/>
                                 {registrationCredentials.error ? <Text style={styles.error}>{registrationCredentials.error}</Text> : null}
@@ -215,7 +213,7 @@ function Authentication({navigation}){
                         </View>
                         <View style={styles.switchContainer}>
                             <SegmentedControl
-                                values={[t('segmentControlLogin'), t('segmentControlRegister')]}
+                                values={['Login', 'Registrati']}
                                 selectedIndex={selectedIndex}
                                 onChange={(event) => {
                                     setSelectedIndex(event.nativeEvent.selectedSegmentIndex)

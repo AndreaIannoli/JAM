@@ -5,7 +5,6 @@ import {
     removeFromFavourite,
     sendPushNotification
 } from "../../services/UserService";
-import i18n from "../../services/i18n";
 
 
 export class MQTTBaseReceiver implements MQTTReceiver {
@@ -44,11 +43,14 @@ export class MQTTBaseReceiver implements MQTTReceiver {
                 this.setUpdate(currentUpdate => currentUpdate + 1);
                 const isFav = await checkIfFavourite(streetName);
                 if(await getUserNotificationsPref() && isFav) {
-                    await sendPushNotification(this.expoPushToken, streetName, i18n.t(status.replace(/ /g,'').toLowerCase() + "StreetNotificationBody", {streetName: streetName}));
-                    await addNotification(streetName, '', NotificationType[status.replace(/ /g,'').toUpperCase()], new Date());
+                    await sendPushNotification(this.expoPushToken, streetName, streetName + ' è ' +
+                        (status === 'free' ? 'libera' : (status === 'almost full' ? 'quasi piena' : 'piena')));
+                    await addNotification(streetName, streetName + ' è ' +
+                        (status === 'free' ? 'libera' : (status === 'almost full' ? 'quasi piena' : 'piena')), NotificationType[status.replace(/ /g,'').toUpperCase()], new Date());
                     this.setUpdateNotifications(currentUpdate => currentUpdate+1);
                 } else if(isFav) {
-                    await addNotification(streetName, '', NotificationType[status.replace(/ /g,'').toUpperCase()], new Date());
+                    await addNotification(streetName, streetName + ' è ' +
+                        (status === 'free' ? 'libera' : (status === 'almost full' ? 'quasi piena' : 'piena')), NotificationType[status.replace(/ /g,'').toUpperCase()], new Date());
                     this.setUpdateNotifications(currentUpdate => currentUpdate+1);
                 }
             }

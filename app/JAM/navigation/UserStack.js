@@ -16,8 +16,7 @@ import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import FavsStack from "./FavsStack";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-import {getUserLanguagePref, registerForPushNotificationsAsync} from "../services/UserService";
-import i18n from "../services/i18n";
+import {registerForPushNotificationsAsync} from "../services/UserService";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,17 +33,6 @@ export default function UserStack() {
         });
         return token.data;
     }
-
-    async function checkLangCorrespondence() {
-        const languagePref = await getUserLanguagePref();
-        if((languagePref !== undefined || languagePref !== null) && languagePref !== i18n.language) {
-            await i18n.changeLanguage(languagePref);
-        }
-    }
-
-    useEffect(() => {
-        checkLangCorrespondence();
-    }, []);
 
     useEffect(() => {
         registerForPushNotificationsAsync({
@@ -89,7 +77,6 @@ export default function UserStack() {
             }, 20000);
         })();
     }, []);
-
     const styles = StyleSheet.create({
         iconContainer: {
             backgroundColor: Colors.surface200,

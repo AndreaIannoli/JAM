@@ -7,12 +7,10 @@ import {useContext, useEffect, useState} from "react";
 import {addToFavourite, checkIfFavourite, removeFromFavourite} from "../services/UserService";
 import {getStatusComponent} from "../services/StreetService";
 import {StreetsInfosContext} from "./StreetsInfosProvider";
-import {useTranslation} from "react-i18next";
 
 function StreetModal({isVisible, streetName, streetInfos, onClose}) {
     const [isFavourite, setIsFavourite] = useState(false);
     const {setUpdateFavs} = useContext(StreetsInfosContext);
-    const {t, i18n} = useTranslation();
     async function retrieveIsFavourite() {
         setIsFavourite(await checkIfFavourite(streetName));
     }
@@ -99,16 +97,16 @@ function StreetModal({isVisible, streetName, streetInfos, onClose}) {
                 <Text style={styles.title}>{streetName}</Text>
                 <View style={styles.body}>
                     <View style={styles.row}>
-                        <Text style={styles.bodyLabel}>{i18n.t('statusLabel')}</Text>
+                        <Text style={styles.bodyLabel}>Status:</Text>
                         {getStatusComponent(streetInfos.status)}
                     </View>
-                    <Text style={[styles.bodyLabel, {marginTop: 10}]}>{i18n.t('coordsLabel')}</Text>
+                    <Text style={[styles.bodyLabel, {marginTop: 10}]}>Coordinate</Text>
                     <View style={styles.row}>
-                        <Text style={styles.bodySubLabel}>{i18n.t('startLabel')}</Text>
+                        <Text style={styles.bodySubLabel}>Inizio:</Text>
                         <Text style={styles.bodyText}>{streetInfos.latStart + "° " + streetInfos.lngStart + "°"}</Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.bodySubLabel}>{i18n.t('endLabel')}</Text>
+                        <Text style={styles.bodySubLabel}>Fine:</Text>
                         <Text style={styles.bodyText}>{streetInfos.latEnd + "° " + streetInfos.lngEnd + "°"}</Text>
                     </View>
                     <View style={styles.buttonContainer}>

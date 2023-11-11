@@ -15,10 +15,8 @@ import {
     removeFromFavourite
 } from "../services/UserService";
 import {StreetsInfosContext} from "../components/StreetsInfosProvider";
-import {useTranslation} from "react-i18next";
 
 function TopBar({page, navigation}){
-    const { t } = useTranslation();
     const styles = StyleSheet.create({
         topBarContainer: {
             paddingTop: Constants.statusBarHeight,
@@ -38,9 +36,7 @@ function TopBar({page, navigation}){
         userPillContainer: {
             flexDirection: "row",
             width: "100%",
-            paddingHorizontal: 20,
-            justifyContent: "center",
-            alignItems: "center",
+            paddingHorizontal: 20
         },
         headingContainer: {
             flexDirection: "row",
@@ -73,10 +69,6 @@ function TopBar({page, navigation}){
         rightBtn: {
             position: "absolute",
             right: 20
-        },
-        leftBtn: {
-            position: "absolute",
-            left: 20
         }
     })
     if(page === "Home") {
@@ -84,9 +76,6 @@ function TopBar({page, navigation}){
             <View style={styles.topBarContainer}>
                 <Image source={require("../res/img/logohorizontal_2.webp")} resizeMode="contain" style={styles.logo}/>
                 <View style={styles.userPillContainer}>
-                    <TouchableOpacity onPress={() => {navigation.navigate('Settings')}}>
-                        <MaterialIcons name="settings" style={styles.iconSecondary}/>
-                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => {navigation.navigate('Profile')}} style={{marginStart: "auto"}}>
                         <UserPill username={FIREBASE_AUTH.currentUser.displayName} propic={FIREBASE_AUTH.currentUser.photoURL}/>
                     </TouchableOpacity>
@@ -107,7 +96,7 @@ function TopBar({page, navigation}){
             <View style={styles.topBarContainer}>
                 <Image source={require("../res/img/logohorizontal_2.webp")} resizeMode="contain" style={styles.logo}/>
                 <View style={styles.headingContainerWOBtns}>
-                    <Text style={styles.headingText}>{t('feedHeading')}</Text>
+                    <Text style={styles.headingText}>Il tuo feed</Text>
                     {notificationsPref ?
                         <TouchableOpacity style={styles.rightBtn} onPress={() => {changeUserNotificationsPref(false); setNotificationsPref(false);}}>
                             <MaterialCommunityIcons name="bell" style={styles.iconSecondary} />
@@ -125,7 +114,7 @@ function TopBar({page, navigation}){
             <View style={styles.topBarContainer}>
                 <Image source={require("../res/img/logohorizontal_2.webp")} resizeMode="contain" style={styles.logo}/>
                 <View style={styles.headingContainerWOBtns}>
-                    <Text style={styles.headingText}>{t('favouritesHeading')}</Text>
+                    <Text style={styles.headingText}>I tuoi preferiti</Text>
                 </View>
             </View>
         )
@@ -137,22 +126,10 @@ function TopBar({page, navigation}){
                     <TouchableOpacity onPress={() => {navigation.navigate('Home')}}>
                         <MaterialIcons name="arrow-back" style={styles.iconSecondary}/>
                     </TouchableOpacity>
-                    <Text style={styles.headingText}>{t('profileHeading')}</Text>
+                    <Text style={styles.headingText}>Il tuo profilo</Text>
                     <TouchableOpacity onPress={() => {signOut(FIREBASE_AUTH)}}>
                         <MaterialIcons name="logout" style={styles.iconPrimary}/>
                     </TouchableOpacity>
-                </View>
-            </View>
-        )
-    } else if(page === "Settings") {
-        return(
-            <View style={styles.topBarContainer}>
-                <Image source={require("../res/img/logohorizontal_2.webp")} resizeMode="contain" style={styles.logo}/>
-                <View style={styles.headingContainerWOBtns}>
-                    <TouchableOpacity onPress={() => {navigation.navigate('Home')}} style={styles.leftBtn}>
-                        <MaterialIcons name="arrow-back" style={styles.iconSecondary}/>
-                    </TouchableOpacity>
-                    <Text style={styles.headingText}>{t('settingsHeading')}</Text>
                 </View>
             </View>
         )

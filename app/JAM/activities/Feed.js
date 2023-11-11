@@ -14,12 +14,10 @@ import Animated, {
     withTiming
 } from "react-native-reanimated"
 import {GestureHandlerRootView, PanGestureHandler} from "react-native-gesture-handler";
-import {useTranslation} from "react-i18next";
 
 function Feed(){
     const [notifications, setNotifications] = useState(new Map());
     const {updateNotifications} = useContext(StreetsInfosContext);
-    const { t } = useTranslation();
 
     const deviceWidth = Dimensions.get('window').width;
     const threshold = -deviceWidth * 0.4;
@@ -63,7 +61,7 @@ function Feed(){
                             <Text style={styles.notificationHeading}>{title}</Text>
                             <Text style={styles.ago}>{timeAgo((date.toDate().getTime()) / 1000)}</Text>
                         </View>
-                        <Text style={styles.notificationBody}>{getNotificationDesc(title, description, notificationType)}</Text>
+                        <Text style={styles.notificationBody}>{description}</Text>
                     </View>
                 </Animated.View>
             </PanGestureHandler>
@@ -118,15 +116,7 @@ function Feed(){
         } else {
             const days = Math.floor(timeDifference / 86400);
             const hours = Math.floor((timeDifference % 86400) / 3600);
-            return `${days}d ago`;
-        }
-    }
-
-    function getNotificationDesc(title, description, notificationType) {
-        if(notificationType === "notifyAlmostFull" || notificationType === "notifyFull" || notificationType === "notifyFree") {
-            return t(notificationType.replace("notify", "").toLowerCase() + "StreetNotificationBody", {streetName: title});
-        } else {
-            return description;
+            return `${days}d ${hours}h ago`;
         }
     }
 
@@ -165,11 +155,9 @@ function Feed(){
             color: 'white',
             flexWrap: 'wrap',
             flexDirection: "row",
-            flexShrink: 1
         },
         notificationInfos: {
-            flexGrow: 1,
-            maxWidth: "80%"
+            flexGrow: 1
         },
         notificationsContainer: {
             width: '100%'
