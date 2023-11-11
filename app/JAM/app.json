@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "JAM",
+    "slug": "JAM",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "androidNavigationBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#232323"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "48b63522-6fb0-42e2-960f-61b810903e9d"
+      }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
+  }
+}

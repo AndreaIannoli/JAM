@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9443000b-4c70-45e4-ae04-20eaa12231da" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/activities/Settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/lang/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/lang/it.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Favourites.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Favourites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Feed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Onboarding.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Onboarding.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Street.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Street.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/TopBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/TopBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ImagePickerBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImagePickerBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/StreetModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/StreetModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserPill.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserPill.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/FirebaseConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/FirebaseConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/la-mqtt/common/baseReceiver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/la-mqtt/common/baseReceiver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/metro.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/metro.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/HomeStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/HomeStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/UserStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/UserStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/AuthService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/StreetService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/StreetService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/UserService.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/App.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/activities/Authentication.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/activities/Favourites.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/activities/Home.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/la-mqtt/client/smqttclient.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/la-mqtt/common/baseReceiver.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/la-mqtt/common/iconnector.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/services/AuthService.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/services/ClientService.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/tsconfig.json" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2WG9jBDRYBJ36QhNO5m2AU9pC3d" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "TranslationAndSettings",
+    "last_opened_file_path": "/Users/andreaiannoli/Desktop/Uni/tesi/repo/JAM/app/JAM/services",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "JavaScript.Libraries",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services" />
+      <recent name="$PROJECT_DIR$/activities" />
+      <recent name="$PROJECT_DIR$/navigation" />
+      <recent name="$PROJECT_DIR$/la-mqtt" />
+      <recent name="$PROJECT_DIR$/Components" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9443000b-4c70-45e4-ae04-20eaa12231da" name="Changes" comment="" />
+      <created>1696348181888</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1696348181888</updated>
+      <workItem from="1696348183334" duration="43206000" />
+      <workItem from="1696515947003" duration="44691000" />
+      <workItem from="1696698095371" duration="3464000" />
+      <workItem from="1696804811212" duration="8078000" />
+      <workItem from="1696982714579" duration="6488000" />
+      <workItem from="1697059286412" duration="12783000" />
+      <workItem from="1697578295779" duration="10690000" />
+      <workItem from="1697752411796" duration="10633000" />
+      <workItem from="1698010613194" duration="10130000" />
+      <workItem from="1698318133998" duration="612000" />
+      <workItem from="1698355702861" duration="32762000" />
+      <workItem from="1698793242231" duration="1064000" />
+      <workItem from="1698801124101" duration="72992000" />
+      <workItem from="1699394639510" duration="80139000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
