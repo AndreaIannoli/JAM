@@ -6,11 +6,13 @@ import {useContext} from "react";
 import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import MapViewDirections from "react-native-maps-directions";
 import {getStatusComponent} from "../services/StreetService";
+import {useTranslation} from "react-i18next";
 
 function Street({route, navigation}) {
     const {streetName} = route.params;
     const {streetsInfos} = useContext(StreetsInfosContext);
     const GOOGLE_MAPS_APIKEY = 'AIzaSyCMVvS9_LtrL_sfNoXu27hfhWBaWtYrUss';
+    const { t } = useTranslation();
 
     const origin = {latitude: streetsInfos.get(streetName).latStart, longitude: streetsInfos.get(streetName).lngStart};
     const destination = {latitude: streetsInfos.get(streetName).latEnd, longitude: streetsInfos.get(streetName).lngEnd};
@@ -81,16 +83,16 @@ function Street({route, navigation}) {
                     />
                 </MapView>
                 <View style={[styles.row, {marginTop: 20}]}>
-                    <Text style={styles.bodyLabel}>Status:</Text>
+                    <Text style={styles.bodyLabel}>{t('statusLabel')}</Text>
                     {getStatusComponent(streetsInfos.get(streetName).status)}
                 </View>
-                <Text style={[styles.bodyLabel, {marginTop: 10}]}>Coordinate</Text>
+                <Text style={[styles.bodyLabel, {marginTop: 10}]}>{t('coordsLabel')}</Text>
                 <View style={styles.row}>
-                    <Text style={styles.bodySubLabel}>Inizio:</Text>
+                    <Text style={styles.bodySubLabel}>{t('startLabel')}</Text>
                     <Text style={styles.bodyText}>{streetsInfos.get(streetName).latStart + "° " + streetsInfos.get(streetName).lngStart + "°"}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text style={styles.bodySubLabel}>Fine:</Text>
+                    <Text style={styles.bodySubLabel}>{t('endLabel')}</Text>
                     <Text style={styles.bodyText}>{streetsInfos.get(streetName).latEnd + "° " + streetsInfos.get(streetName).lngEnd + "°"}</Text>
                 </View>
             </View>

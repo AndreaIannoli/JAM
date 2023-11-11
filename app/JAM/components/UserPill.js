@@ -1,11 +1,6 @@
 import {Image, View, StyleSheet, Text, Pressable, Modal, TouchableOpacity} from "react-native";
 import {Colors} from "../res/Colors";
 import {useState} from "react";
-import {signOut} from "firebase/auth";
-import {FIREBASE_AUTH} from "../config/FirebaseConfig";
-import {Feather} from "@expo/vector-icons";
-import {LinearGradient} from "expo-linear-gradient";
-import ModalDropdown from 'react-native-modal-dropdown';
 
 function UserPill({username, propic}){
     const [modalVisible, setModalVisible] = useState(false);

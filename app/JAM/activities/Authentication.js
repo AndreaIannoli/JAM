@@ -19,6 +19,7 @@ import {Ionicons} from "@expo/vector-icons";
 import {signIn, signUp} from "../services/AuthService";
 import {FIREBASE_AUTH, FIREBASE_DB} from "../config/FirebaseConfig";
 import ImagePickerBox from "../components/ImagePickerBox";
+import {useTranslation} from "react-i18next";
 
 function Authentication({navigation}){
     const windowHeight = useWindowDimensions().height;
@@ -39,6 +40,7 @@ function Authentication({navigation}){
         error: ''
     });
     const auth = FIREBASE_AUTH;
+    const { t } = useTranslation();
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -119,101 +121,101 @@ function Authentication({navigation}){
                     <View style={styles.container}>
                         <View style={styles.authContainer}>
                             <Image source={horizontalLogo1} style={styles.logo} resizeMode="contain"/>
-                        {selectedIndex === 0 ?
-                            <View style={styles.form}>
-                                <TextInput
-                                    editable
-                                    inputMode="email"
-                                    autoComplete="email"
-                                    placeholder="Email"
-                                    cursorColor={Colors.primary}
-                                    placeholderTextColor={Colors.grey}
-                                    style={[styles.textInput, {marginTop: 20}]}
-                                    onChangeText={(text) => setLoginCredentials({ ...loginCredentials, email: text })}
-                                />
-                                <View style={styles.passContainer}>
+                            {selectedIndex === 0 ?
+                                <View style={styles.form}>
                                     <TextInput
                                         editable
-                                        secureTextEntry={!showPassword}
-                                        onChangeText={(text) => {setPassword(text); setLoginCredentials({ ...loginCredentials, password: text })}}
-                                        value={password}
-                                        inputMode="text"
-                                        autoComplete="password"
-                                        placeholder="Password"
+                                        inputMode="email"
+                                        autoComplete="email"
+                                        placeholder={t('emailPlaceHolder')}
                                         cursorColor={Colors.primary}
                                         placeholderTextColor={Colors.grey}
-                                        style={[styles.textInput, {paddingHorizontal: 0}]}
+                                        style={[styles.textInput, {marginTop: 20}]}
+                                        onChangeText={(text) => setLoginCredentials({ ...loginCredentials, email: text })}
+                                    />
+                                    <View style={styles.passContainer}>
+                                        <TextInput
+                                            editable
+                                            secureTextEntry={!showPassword}
+                                            onChangeText={(text) => {setPassword(text); setLoginCredentials({ ...loginCredentials, password: text })}}
+                                            value={password}
+                                            inputMode="text"
+                                            autoComplete="password"
+                                            placeholder={t('passwordPlaceHolder')}
+                                            cursorColor={Colors.primary}
+                                            placeholderTextColor={Colors.grey}
+                                            style={[styles.textInput, {paddingHorizontal: 0}]}
 
-                                    />
-                                    <Ionicons
-                                        name={showPassword ? 'eye-off' : 'eye'}
-                                        size={24}
-                                        color={Colors.primary}
-                                        style={styles.icon}
-                                        onPress={toggleShowPassword}
-                                    />
+                                        />
+                                        <Ionicons
+                                            name={showPassword ? 'eye-off' : 'eye'}
+                                            size={24}
+                                            color={Colors.primary}
+                                            style={styles.icon}
+                                            onPress={toggleShowPassword}
+                                        />
+                                    </View>
+                                    <PrimaryButton title="Login" onPress={() => {signIn(auth, loginCredentials, setLoginCredentials, navigation)}}/>
+                                    {loginCredentials.error ? <Text style={styles.error}>{loginCredentials.error}</Text> : null}
+                                    <Pressable hitSlop={3} style={{marginTop: 10}}>
+                                        <Text style={styles.forgotPassText}>{t('passwordForgotLink')}</Text>
+                                    </Pressable>
                                 </View>
-                                <PrimaryButton title="Login" onPress={() => {signIn(auth, loginCredentials, setLoginCredentials, navigation)}}/>
-                                {loginCredentials.error ? <Text style={styles.error}>{loginCredentials.error}</Text> : null}
-                                <Pressable hitSlop={3} style={{marginTop: 10}}>
-                                    <Text style={styles.forgotPassText}>Hai dimenticato la password?</Text>
-                                </Pressable>
-                            </View>
-                            :
-                            <View style={styles.form}>
-                                <ImagePickerBox image={image} setImage={setImage}/>
-                                <TextInput
-                                    editable
-                                    inputMode="email"
-                                    autoComplete="email"
-                                    placeholder="Email"
-                                    cursorColor={Colors.primary}
-                                    placeholderTextColor={Colors.grey}
-                                    style={[styles.textInput,  {marginTop: 20}]}
-                                    onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, email: text })}
-                                />
-                                <TextInput
-                                    editable
-                                    inputMode="text"
-                                    autoComplete="username"
-                                    placeholder="Nome"
-                                    cursorColor={Colors.primary}
-                                    placeholderTextColor={Colors.grey}
-                                    style={[styles.textInput,  {marginTop: 20}]}
-                                    onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, displayName: text })}
-                                />
-                                <TextInput
-                                    editable
-                                    secureTextEntry={true}
-                                    inputMode="text"
-                                    autoComplete="password"
-                                    placeholder="Password"
-                                    cursorColor={Colors.primary}
-                                    placeholderTextColor={Colors.grey}
-                                    style={[styles.textInput, {marginTop: 20}]}
-                                    onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, password: text })}
-                                />
-                                <TextInput
-                                    editable
-                                    secureTextEntry={true}
-                                    inputMode="text"
-                                    autoComplete="password"
-                                    placeholder="Conferma password"
-                                    cursorColor={Colors.primary}
-                                    placeholderTextColor={Colors.grey}
-                                    style={[styles.textInput, {marginTop: 20}, {marginBottom: 60}]}
-                                    onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, confirmPass: text })}
-                                />
-                                <PrimaryButton title="Registrati" onPress={() => {
-                                    signUp(auth, registrationCredentials, setRegistrationCredentials, image, navigation);
-                                }}/>
-                                {registrationCredentials.error ? <Text style={styles.error}>{registrationCredentials.error}</Text> : null}
-                            </View>
-                        }
+                                :
+                                <View style={styles.form}>
+                                    <ImagePickerBox image={image} setImage={setImage}/>
+                                    <TextInput
+                                        editable
+                                        inputMode="email"
+                                        autoComplete="email"
+                                        placeholder={t('emailPlaceHolder')}
+                                        cursorColor={Colors.primary}
+                                        placeholderTextColor={Colors.grey}
+                                        style={[styles.textInput,  {marginTop: 20}]}
+                                        onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, email: text })}
+                                    />
+                                    <TextInput
+                                        editable
+                                        inputMode="text"
+                                        autoComplete="username"
+                                        placeholder={t('namePlaceHolder')}
+                                        cursorColor={Colors.primary}
+                                        placeholderTextColor={Colors.grey}
+                                        style={[styles.textInput,  {marginTop: 20}]}
+                                        onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, displayName: text })}
+                                    />
+                                    <TextInput
+                                        editable
+                                        secureTextEntry={true}
+                                        inputMode="text"
+                                        autoComplete="password"
+                                        placeholder={t('passwordPlaceHolder')}
+                                        cursorColor={Colors.primary}
+                                        placeholderTextColor={Colors.grey}
+                                        style={[styles.textInput, {marginTop: 20}]}
+                                        onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, password: text })}
+                                    />
+                                    <TextInput
+                                        editable
+                                        secureTextEntry={true}
+                                        inputMode="text"
+                                        autoComplete="password"
+                                        placeholder={t('confirmPasswordPlaceHolder')}
+                                        cursorColor={Colors.primary}
+                                        placeholderTextColor={Colors.grey}
+                                        style={[styles.textInput, {marginTop: 20}, {marginBottom: 60}]}
+                                        onChangeText={(text) => setRegistrationCredentials({ ...registrationCredentials, confirmPass: text })}
+                                    />
+                                    <PrimaryButton title={t('registerBtn')} onPress={() => {
+                                        signUp(auth, registrationCredentials, setRegistrationCredentials, image, navigation);
+                                    }}/>
+                                    {registrationCredentials.error ? <Text style={styles.error}>{registrationCredentials.error}</Text> : null}
+                                </View>
+                            }
                         </View>
                         <View style={styles.switchContainer}>
                             <SegmentedControl
-                                values={['Login', 'Registrati']}
+                                values={[t('segmentControlLogin'), t('segmentControlRegister')]}
                                 selectedIndex={selectedIndex}
                                 onChange={(event) => {
                                     setSelectedIndex(event.nativeEvent.selectedSegmentIndex)

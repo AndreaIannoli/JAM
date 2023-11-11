@@ -14,10 +14,12 @@ import Animated, {
     withTiming
 } from "react-native-reanimated"
 import {GestureHandlerRootView, PanGestureHandler} from "react-native-gesture-handler";
+import {useTranslation} from "react-i18next";
 
 function Feed(){
     const [notifications, setNotifications] = useState(new Map());
     const {updateNotifications} = useContext(StreetsInfosContext);
+    const { t } = useTranslation();
 
     const deviceWidth = Dimensions.get('window').width;
     const threshold = -deviceWidth * 0.4;
@@ -61,7 +63,7 @@ function Feed(){
                             <Text style={styles.notificationHeading}>{title}</Text>
                             <Text style={styles.ago}>{timeAgo((date.toDate().getTime()) / 1000)}</Text>
                         </View>
-                        <Text style={styles.notificationBody}>{description}</Text>
+                        <Text style={styles.notificationBody}>{getNotificationDesc(title, description, notificationType)}</Text>
                     </View>
                 </Animated.View>
             </PanGestureHandler>
@@ -116,7 +118,15 @@ function Feed(){
         } else {
             const days = Math.floor(timeDifference / 86400);
             const hours = Math.floor((timeDifference % 86400) / 3600);
-            return `${days}d ${hours}h ago`;
+            return `${days}d ago`;
+        }
+    }
+
+    function getNotificationDesc(title, description, notificationType) {
+        if(notificationType === "notifyAlmostFull" || notificationType === "notifyFull" || notificationType === "notifyFree") {
+            return t(notificationType.replace("notify", "").toLowerCase() + "StreetNotificationBody", {streetName: title});
+        } else {
+            return description;
         }
     }
 
@@ -155,9 +165,11 @@ function Feed(){
             color: 'white',
             flexWrap: 'wrap',
             flexDirection: "row",
+            flexShrink: 1
         },
         notificationInfos: {
-            flexGrow: 1
+            flexGrow: 1,
+            maxWidth: "80%"
         },
         notificationsContainer: {
             width: '100%'
@@ -179,17 +191,17 @@ function Feed(){
             <TopBar page="Feed"/>
             <View style={styles.notificationsContainer}>
                 <GestureHandlerRootView>
-                <FlatList
-                    data={Object.keys(notifications).sort((a,b) =>
-                        notifications[a]['date'].toDate() - notifications[b]['date'].toDate() > 0 ? -1 : 1
-                    )}
-                    renderItem={({item}) => <Item title={notifications[item]['title']} description={notifications[item]['description']} notificationType={notifications[item]['notificationType']} date={notifications[item]['date']} notificationId={item}/>}
-                    KeyExtractor={({item}) => item}
-                    style={styles.flatList}
-                    persistentScrollbar={true}
-                    showsVerticalScrollIndicator={true}
-                    contentContainerStyle={{ paddingBottom: 300 }}
-                />
+                    <FlatList
+                        data={Object.keys(notifications).sort((a,b) =>
+                            notifications[a]['date'].toDate() - notifications[b]['date'].toDate() > 0 ? -1 : 1
+                        )}
+                        renderItem={({item}) => <Item title={notifications[item]['title']} description={notifications[item]['description']} notificationType={notifications[item]['notificationType']} date={notifications[item]['date']} notificationId={item}/>}
+                        KeyExtractor={({item}) => item}
+                        style={styles.flatList}
+                        persistentScrollbar={true}
+                        showsVerticalScrollIndicator={true}
+                        contentContainerStyle={{ paddingBottom: 300 }}
+                    />
                 </GestureHandlerRootView>
             </View>
         </View>

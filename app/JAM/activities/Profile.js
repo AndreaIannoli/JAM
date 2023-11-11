@@ -3,8 +3,10 @@ import TopBar from "./TopBar";
 import {FIREBASE_AUTH} from "../config/FirebaseConfig";
 import {Colors} from "../res/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
+import {useTranslation} from "react-i18next";
 
 function Profile({navigation}){
+    const { t } = useTranslation();
     const styles = StyleSheet.create({
         container: {
             height: "100%",
@@ -42,18 +44,18 @@ function Profile({navigation}){
             <Image source={{uri: FIREBASE_AUTH.currentUser.photoURL}} style={styles.profilePropic}></Image>
             <View style={styles.profileBox}>
                 <Text style={styles.profileLabel}>
-                    Nome:
+                    {t('nameLabel')}
                 </Text>
                 <Text style={styles.profileText}>
                     {FIREBASE_AUTH.currentUser.displayName}
                 </Text>
                 <Text style={styles.profileLabel}>
-                    Indirizzo Email:
+                    {t('emailLabel')}
                 </Text>
                 <Text style={styles.profileText}>
                     {FIREBASE_AUTH.currentUser.email}
                 </Text>
-                <Text style={[styles.profileLabel, {justifyContent: "center"}]}>Email verificata: {FIREBASE_AUTH.currentUser.emailVerified ? <MaterialIcons name="verified" style={{color: "green"}}/> : <MaterialIcons name="cancel" style={{color: Colors.primary}}/>}</Text>
+                <Text style={[styles.profileLabel, {justifyContent: "center"}]}>{t('emailVerLabel')}{FIREBASE_AUTH.currentUser.emailVerified ? <MaterialIcons name="verified" style={{color: "green"}}/> : <MaterialIcons name="cancel" style={{color: Colors.primary}}/>}</Text>
             </View>
         </View>
     )

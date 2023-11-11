@@ -16,7 +16,8 @@ import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import FavsStack from "./FavsStack";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
-import {registerForPushNotificationsAsync} from "../services/UserService";
+import {getUserLanguagePref, registerForPushNotificationsAsync} from "../services/UserService";
+import i18n from "../services/i18n";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +34,17 @@ export default function UserStack() {
         });
         return token.data;
     }
+
+    async function checkLangCorrespondence() {
+        const languagePref = await getUserLanguagePref();
+        if((languagePref !== undefined || languagePref !== null) && languagePref !== i18n.language) {
+            await i18n.changeLanguage(languagePref);
+        }
+    }
+
+    useEffect(() => {
+        checkLangCorrespondence();
+    }, []);
 
     useEffect(() => {
         registerForPushNotificationsAsync({
@@ -77,6 +89,7 @@ export default function UserStack() {
             }, 20000);
         })();
     }, []);
+
     const styles = StyleSheet.create({
         iconContainer: {
             backgroundColor: Colors.surface200,
@@ -93,29 +106,29 @@ export default function UserStack() {
     return (
         <NavigationContainer independent={true}>
             <Tab.Navigator initialRouteName='Home' screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
+                tabBarIcon: ({ focused, color, size }) => {
 
-                        if (route.name === 'Home') {
-                            return <View style={styles.iconContainer}><MaterialIcons name='explore' size={size} color={color} style={styles.icon}/></View>;
-                        } else if (route.name === 'Feed') {
-                            return <View style={styles.iconContainer}><MaterialIcons name='rss-feed' size={size} color={color} style={styles.icon}/></View>;
-                        } else if (route.name === 'Favourites') {
-                            return <View style={styles.iconContainer}><MaterialCommunityIcons name='cards-heart' size={size} color={color} style={styles.icon}/></View>;
-                        }
-                    },
-                    tabBarActiveTintColor: Colors.primary,
-                    tabBarInactiveTintColor: "white",
-                    tabBarStyle: {
-                        paddingTop: 20,
-                        backgroundColor: Colors.surface500,
-                        borderTopLeftRadius: 30,
-                        borderTopRightRadius: 30,
-                        height: 90,
-                        position: 'absolute'
-                    },
-                    headerShown: false,
-                    tabBarShowLabel: false
-                })}>
+                    if (route.name === 'Home') {
+                        return <View style={styles.iconContainer}><MaterialIcons name='explore' size={size} color={color} style={styles.icon}/></View>;
+                    } else if (route.name === 'Feed') {
+                        return <View style={styles.iconContainer}><MaterialIcons name='rss-feed' size={size} color={color} style={styles.icon}/></View>;
+                    } else if (route.name === 'Favourites') {
+                        return <View style={styles.iconContainer}><MaterialCommunityIcons name='cards-heart' size={size} color={color} style={styles.icon}/></View>;
+                    }
+                },
+                tabBarActiveTintColor: Colors.primary,
+                tabBarInactiveTintColor: "white",
+                tabBarStyle: {
+                    paddingTop: 20,
+                    backgroundColor: Colors.surface500,
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30,
+                    height: 90,
+                    position: 'absolute'
+                },
+                headerShown: false,
+                tabBarShowLabel: false
+            })}>
                 <Tab.Screen name="Feed" component={Feed} />
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Favourites" component={FavsStack} />
