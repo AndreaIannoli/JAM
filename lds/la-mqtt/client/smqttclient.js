@@ -116,21 +116,22 @@ var SpatialMQTTClient = /** @class */ (function (_super) {
      */
     SpatialMQTTClient.prototype.publicGeofence = function (latitude, longitude, radius, topic, message, geofenceId) {
         return __awaiter(this, void 0, void 0, function () {
-            var position, topicN, messageN;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var position, topicN, messageN, _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         position = new position_1.Position(latitude, longitude);
                         topicN = messages_1.MQTTSpatialMessages.TOPIC_PUBLISH_GEOFENCE;
                         messageN = "{ " + position.toString() + ", \"id\": \"" + geofenceId + "\"";
-                        messageN = messageN + ", \"radius\": " + radius + ", \"message\": \"" + message + "\", \"topicGeofence\": \"" + topic + '\" }';
+                        messageN = messageN + ", \"radius\": " + radius + ", \"message\": \"" + message + "\", \"topicGeofence\": \"" + topic + '\", \"notifiedBrokers\": []}';
                         //await this.publish(topic, messageN);
                         //HHH
+                        _b = (_a = console).log;
                         return [4 /*yield*/, this.publish(topicN, messageN)];
                     case 1:
                         //await this.publish(topic, messageN);
                         //HHH
-                        _a.sent();
+                        _b.apply(_a, [_c.sent()]);
                         return [2 /*return*/];
                 }
             });

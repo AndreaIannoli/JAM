@@ -36,23 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clientConnection = exports.lamqttClient = exports.clientId = void 0;
-var smqttclient_1 = require("./la-mqtt/client/smqttclient");
-var uuid_1 = require("uuid");
-exports.clientId = 'LDS-CLIENT-' + (0, uuid_1.v4)();
-exports.lamqttClient = new smqttclient_1.SpatialMQTTClient('', '', 'ws://127.0.0.1:9001/', 9001, exports.clientId);
-function clientConnection() {
+exports.clientConnection = void 0;
+function clientConnection(lamqttClient) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!exports.lamqttClient) {
+                    if (!lamqttClient) {
                         throw new Error("LAMQTT Client not initialized");
                     }
                     console.log("CHECK CONNECTION...");
-                    if (!!exports.lamqttClient.getMConnector().isConnected()) return [3 /*break*/, 2];
+                    if (!!lamqttClient.getMConnector().isConnected()) return [3 /*break*/, 2];
                     console.log("CONNECTING...");
-                    return [4 /*yield*/, exports.lamqttClient.connect()];
+                    return [4 /*yield*/, lamqttClient.connect()];
                 case 1: return [2 /*return*/, _a.sent()];
                 case 2:
                     console.log("ALREADY CONNECTED");
