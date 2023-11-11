@@ -5,33 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9443000b-4c70-45e4-ae04-20eaa12231da" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/activities/Settings.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/lang/en.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/lang/it.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/i18n.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Authentication.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Favourites.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Favourites.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Feed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Onboarding.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Onboarding.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Street.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Street.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/TopBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/TopBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/ImagePickerBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImagePickerBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/StreetModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/StreetModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/UserPill.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserPill.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/FirebaseConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/FirebaseConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/la-mqtt/common/baseReceiver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/la-mqtt/common/baseReceiver.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/metro.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/metro.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/HomeStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/HomeStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/UserStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/UserStack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/AuthService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/StreetService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/StreetService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/UserService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +81,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "JavaScript.Libraries",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/andreaiannoli/Desktop/Uni/tesi/repo/JAM/app/JAM/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -122,7 +115,8 @@
       <workItem from="1698355702861" duration="32762000" />
       <workItem from="1698793242231" duration="1064000" />
       <workItem from="1698801124101" duration="72992000" />
-      <workItem from="1699394639510" duration="80139000" />
+      <workItem from="1699394639510" duration="81186000" />
+      <workItem from="1699667435009" duration="897000" />
     </task>
     <servers />
   </component>

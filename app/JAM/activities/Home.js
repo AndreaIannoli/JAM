@@ -19,7 +19,6 @@ function Home({navigation}) {
 
     useEffect(() => {
         const polyLinesToPlot = new Map();
-        const toNotify = [];
         for(let streetName of streetsInfos.keys()) {
             const origin = {latitude: streetsInfos.get(streetName).latStart, longitude: streetsInfos.get(streetName).lngStart};
             const destination = {latitude: streetsInfos.get(streetName).latEnd, longitude: streetsInfos.get(streetName).lngEnd};

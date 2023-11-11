@@ -1,16 +1,16 @@
 import {Image, ImageBackground, StyleSheet, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import Constants from "expo-constants";
-import {Heading} from "@gluestack-ui/themed";
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
 import {Colors} from "../res/Colors";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 function Onboarding({ navigation }) {
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const {t, i18n} = useTranslation();
 
     const styles = StyleSheet.create({
         onboardingBG: {
@@ -76,8 +76,8 @@ function Onboarding({ navigation }) {
                     <View style={styles.infoContainer}>
                         <Image source={require("../res/img/logohorizontal_1.webp")} resizeMode="contain" style={styles.onboarding1}/>
                         <View style={styles.textContainer}>
-                            <Text style={styles.heading}>Benvenuto in JAM!</Text>
-                            <Text style={styles.paragraph}>JAM è un app che ti aiuta a trovare parcheggio</Text>
+                            <Text style={styles.heading}>{t('onboardingHeading1')}</Text>
+                            <Text style={styles.paragraph}>{t('onboardingSubHeading1')}</Text>
                         </View>
                     </View>
                     :
@@ -87,8 +87,8 @@ function Onboarding({ navigation }) {
                     <View style={styles.infoContainer}>
                         <Image source={require("../res/img/onboarding1.webp")} resizeMode="contain" style={styles.onboarding1}/>
                         <View style={styles.textContainer}>
-                            <Text style={styles.heading}>Controlla la Heat map!</Text>
-                            <Text style={styles.paragraph}>Tieni sotto controllo la situazione dei parcheggi nelle varie vie della città</Text>
+                            <Text style={styles.heading}>{t('onboardingHeading2')}</Text>
+                            <Text style={styles.paragraph}>{t('onboardingSubHeading2')}</Text>
                         </View>
                     </View>
                     :
@@ -98,8 +98,8 @@ function Onboarding({ navigation }) {
                     <View style={styles.infoContainer}>
                         <Image source={require("../res/img/onboarding2.webp")} resizeMode="contain" style={styles.onboarding1}/>
                         <View style={styles.textContainer}>
-                            <Text style={styles.heading}>Trova parcheggio!</Text>
-                            <Text style={styles.paragraph}>Raggiungi il punto indicato dalla mappa e parcheggia la tua auto</Text>
+                            <Text style={styles.heading}>{t('onboardingHeading3')}</Text>
+                            <Text style={styles.paragraph}>{t('onboardingSubHeading3')}</Text>
                         </View>
                     </View>
                     :
@@ -109,7 +109,7 @@ function Onboarding({ navigation }) {
                 <View style={styles.buttonsContainer}>
                     <View style={styles.buttonContainer}>
                         {selectedIndex > 0 ?
-                            <SecondaryButton title="Indietro" onPress={() => {setSelectedIndex(selectedIndex-1)}}/>
+                            <SecondaryButton title={t('backBtnOnboarding')} onPress={() => {setSelectedIndex(selectedIndex-1)}}/>
                             :
                             null
                         }
@@ -127,7 +127,7 @@ function Onboarding({ navigation }) {
                         style={{height: 20, borderRadius: 50, width: "20%"}}
                     />
                     <View style={styles.buttonContainer}>
-                        <PrimaryButton title="Avanti" onPress={() => {
+                        <PrimaryButton title={t('nextBtnOnboarding')} onPress={() => {
                             if(selectedIndex < 2) {
                                 setSelectedIndex(selectedIndex + 1)
                             } else {

@@ -3,7 +3,6 @@ import it from "../res/lang/it.json";
 import * as Localization from "expo-localization";
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import {FIREBASE_AUTH} from "../config/FirebaseConfig";
 
 export const languageResources = {
     en: {translation: en},
