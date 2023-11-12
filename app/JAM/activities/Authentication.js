@@ -17,7 +17,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import {Ionicons} from "@expo/vector-icons";
 import {signIn, signUp} from "../services/AuthService";
-import {FIREBASE_AUTH, FIREBASE_DB} from "../config/FirebaseConfig";
+import {FIREBASE_AUTH} from "../config/FirebaseConfig";
 import ImagePickerBox from "../components/ImagePickerBox";
 import {useTranslation} from "react-i18next";
 

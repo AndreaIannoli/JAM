@@ -5,26 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9443000b-4c70-45e4-ae04-20eaa12231da" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Authentication.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Favourites.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Favourites.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Feed.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/activities/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/Onboarding.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Onboarding.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/Street.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Street.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/TopBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/TopBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ImagePickerBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ImagePickerBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/StreetModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/StreetModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserPill.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserPill.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/FirebaseConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/FirebaseConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/metro.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/metro.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/HomeStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/HomeStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/activities/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/adaptive-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/adaptive-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/splash.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/UserStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/UserStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/AuthService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/UserService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "TranslationAndSettings",
-    "last_opened_file_path": "/Users/andreaiannoli/Desktop/Uni/tesi/repo/JAM/app/JAM/services",
+    "last_opened_file_path": "/Users/andreaiannoli/Desktop/Uni/tesi/repo/JAM/app/JAM/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,11 +78,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/services" />
       <recent name="$PROJECT_DIR$/activities" />
       <recent name="$PROJECT_DIR$/navigation" />
       <recent name="$PROJECT_DIR$/la-mqtt" />
-      <recent name="$PROJECT_DIR$/Components" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -116,7 +107,7 @@
       <workItem from="1698793242231" duration="1064000" />
       <workItem from="1698801124101" duration="72992000" />
       <workItem from="1699394639510" duration="81186000" />
-      <workItem from="1699667435009" duration="897000" />
+      <workItem from="1699667435009" duration="31257000" />
     </task>
     <servers />
   </component>

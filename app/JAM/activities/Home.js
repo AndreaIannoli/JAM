@@ -1,11 +1,9 @@
-import {Text, View, StyleSheet, Platform} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 import TopBar from "./TopBar";
 import MapView from "react-native-maps";
 import {StatusBar} from "expo-status-bar";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import MapViewDirections from "react-native-maps-directions";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
 import StreetModal from "../components/StreetModal";
 import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import {Colors} from "../res/Colors";

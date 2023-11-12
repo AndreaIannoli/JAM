@@ -2,10 +2,11 @@ import {StyleSheet, Text, View} from "react-native";
 import TopBar from "./TopBar";
 import {Colors} from "../res/Colors";
 import {Picker} from "@react-native-picker/picker";
-import {useEffect, useReducer, useState} from "react";
+import {useState} from "react";
 import i18n from "../services/i18n"
 import {useTranslation} from "react-i18next";
 import {changeUserLanguagePref} from "../services/UserService";
+import Constants from "expo-constants";
 
 function Settings({navigation}){
     const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
@@ -41,6 +42,10 @@ function Settings({navigation}){
         },
         pickerItem: {
             height: 50
+        },
+        versionText: {
+            color: Colors.surface500,
+            fontStyle: "italic"
         }
     })
     return(
@@ -59,6 +64,7 @@ function Settings({navigation}){
                     </Picker>
                 </View>
             </View>
+            <Text style={styles.versionText}>{"JAM version: " + Constants.expoConfig.version}</Text>
         </View>
     )
 }
