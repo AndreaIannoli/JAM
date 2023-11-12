@@ -27,15 +27,18 @@ export class SpatialMQTTBackEnd extends MQTTClient implements MQTTReceiver, ILog
     private historyGeofence: Map<string,number>;
     // @ts-ignore
     private historyNotificationSent: Map<string,number>;
+    // @ts-ignore
+    private adjacentBrokers: [];
+    private host: String;
 
-    constructor (username: string, password: string, host: string, port: number) {
-        super(username,password,host,port,SpatialMQTTBackEnd.DEFAULT_NAME);
+    constructor (username: string, password: string, host: string, port: number, brokerConf: any) {
+        super(username,password,'ws://' + host + ':' + port + '/', port,SpatialMQTTBackEnd.DEFAULT_NAME + '-' + host.split('.').join('') + "-" + port);
         this.persisterType=PersisterType.MONGODB;
         // @ts-ignore
         if (this.persisterType==PersisterType.MEMORY)
             this.persister=new MemPersister();
         else
-            this.persister=new Persister(SpatialMQTTBackEnd.STORAGE_NAME);
+            this.persister=new Persister(SpatialMQTTBackEnd.STORAGE_NAME + '-' + host.split('.').join('') + "-" + port);
 
         //this.logWatcher=new MosquittoWatcher('/Users/marcodifelice/Documents/Lavoro/ProgettiSW/SpatialMQTT/src/backend','log.txt');
         this.geoProcessor=new GeoProcessor(this.persister, this);
@@ -44,6 +47,9 @@ export class SpatialMQTTBackEnd extends MQTTClient implements MQTTReceiver, ILog
         // @ts-ignore
         this.historyNotificationSent=new Map<string,number>();
         this.verboseMode=true;
+        // @ts-ignore
+        this.adjacentBrokers = brokerConf.bridgedBrokers;
+        this.host = host + ':' + port;
     }
 
 
@@ -55,6 +61,9 @@ export class SpatialMQTTBackEnd extends MQTTClient implements MQTTReceiver, ILog
             await this.subscribe(MQTTSpatialMessages.TOPIC_PUBLISH_POSITION);
             await this.subscribe(MQTTSpatialMessages.TOPIC_PUBLISH_GEOFENCE);
             await this.subscribe(MQTTSpatialMessages.TOPIC_PUBLISH_SUBSCRIPTION);
+            for(let aBroker of this.adjacentBrokers) {
+                await this.subscribe('bridgeFrom' + aBroker + 'To' + this.host);
+            }
             await this.persister.connect();
             //await this.logWatcher.start(this);
         }
@@ -74,6 +83,16 @@ export class SpatialMQTTBackEnd extends MQTTClient implements MQTTReceiver, ILog
             await this.handleGeofenceUpdate(msg.message);
         else if (msg.topic==MQTTSpatialMessages.TOPIC_PUBLISH_SUBSCRIPTION)
             await this.handleSubscriptionUpdate(msg.message);
+        else if (msg.topic.substring(0, 6) == MQTTSpatialMessages.TOPIC_PUBLISH_BRIDGE)
+            await this.handleBridgeUpdate(msg.message);
+    }
+
+    // @ts-ignore
+    private async handleBridgeUpdate(payload: string) {
+        if (this.verboseMode==true) {
+            console.log("[BACKEND] Received UPDATE FROM BRIDGE: "+payload);
+        }
+        await this.handleGeofenceUpdate(payload)
     }
 
     // @ts-ignore
@@ -101,6 +120,19 @@ export class SpatialMQTTBackEnd extends MQTTClient implements MQTTReceiver, ILog
         this.historyGeofence.set(objJSON["id"],seqNo);
         console.log("SEQUENTIAL:", this.historyGeofence.get(objJSON["id"]));
         await this.persister.addGeofence(objJSON["topicGeofence"],objJSON["id"],objJSON["latitude"],objJSON["longitude"],objJSON["radius"],objJSON["message"]);
+        const alreadyNotifiedBroker = objJSON['notifiedBrokers'];
+        // This if should be run only by the first backend
+        if(!objJSON['notifiedBrokers'].includes(this.host)) {
+            objJSON['notifiedBrokers'].push(this.host);
+        }
+        objJSON['notifiedBrokers'] = objJSON['notifiedBrokers'].concat(this.adjacentBrokers).filter((value, index, self) => {
+            return self.indexOf(value) === index;
+        });
+        for(let aBroker of this.adjacentBrokers) {
+            if(!alreadyNotifiedBroker.includes(aBroker)) {
+                await this.publish(MQTTSpatialMessages.TOPIC_PUBLISH_BRIDGE + 'From' + this.host + 'To' + aBroker, JSON.stringify(objJSON));
+            }
+        }
     }
 
     // @ts-ignore
