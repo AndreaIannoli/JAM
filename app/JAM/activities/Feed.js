@@ -7,6 +7,7 @@ import {getUserFavourites, getUserNotifications, removeNotification} from "../se
 import {StreetsInfosContext} from "../components/StreetsInfosProvider";
 import {MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import Animated, {
+    Extrapolate, interpolate,
     runOnJS,
     useAnimatedGestureHandler,
     useAnimatedStyle,
@@ -18,7 +19,7 @@ import {useTranslation} from "react-i18next";
 
 function Feed(){
     const [notifications, setNotifications] = useState(new Map());
-    const {updateNotifications} = useContext(StreetsInfosContext);
+    const {updateNotifications, setUpdateNotifications} = useContext(StreetsInfosContext);
     const { t } = useTranslation();
 
     const deviceWidth = Dimensions.get('window').width;
@@ -30,6 +31,8 @@ function Feed(){
         const gestureHandler = useAnimatedGestureHandler({
             onActive: (e) => {
                 dragX.value = e.translationX;
+                const opacityValue = interpolate(e.translationX, [0, -deviceWidth], [1, 0], Extrapolate.CLAMP);
+                opacity.value = opacityValue;
             },
             onEnd: (e) => {
                 if (threshold < e.translationX) {
@@ -39,6 +42,7 @@ function Feed(){
                     height.value = withTiming(0);
                     opacity.value = withTiming(0);
                     runOnJS(removeNotification)(notificationId);
+                    runOnJS(setUpdateNotifications)(currentUpdate => currentUpdate + 1);
                 }
             }
         });
@@ -51,7 +55,7 @@ function Feed(){
                 ],
                 height: height.value,
                 opacity: opacity.value,
-                marginTop: opacity.value === 1 ? 10 : 0
+                marginTop: opacity.value === 1 ? 10 : 10
             }
         })
         return (
@@ -106,8 +110,6 @@ function Feed(){
 
         if (timeDifference < 5) { // Consider timestamps within 5 seconds as "just now"
             return "just now";
-        } else if (timeDifference < 60) {
-            return `${timeDifference}s ago`;
         } else if (timeDifference < 3600) {
             const minutes = Math.floor(timeDifference / 60);
             return `${minutes}m ago`;
@@ -196,11 +198,12 @@ function Feed(){
                             notifications[a]['date'].toDate() - notifications[b]['date'].toDate() > 0 ? -1 : 1
                         )}
                         renderItem={({item}) => <Item title={notifications[item]['title']} description={notifications[item]['description']} notificationType={notifications[item]['notificationType']} date={notifications[item]['date']} notificationId={item}/>}
-                        KeyExtractor={({item}) => item}
+                        KeyExtractor={({ item }) => item.toString()}
                         style={styles.flatList}
                         persistentScrollbar={true}
                         showsVerticalScrollIndicator={true}
                         contentContainerStyle={{ paddingBottom: 300 }}
+                        extraData={updateNotifications}
                     />
                 </GestureHandlerRootView>
             </View>

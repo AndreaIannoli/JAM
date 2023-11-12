@@ -1,10 +1,7 @@
-import React, {createContext, useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from "../activities/Home";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Feed from "../activities/Feed";
-import Favourites from "../activities/Favourites";
 import {Colors} from "../res/Colors";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import {View, StyleSheet} from "react-native";
@@ -18,21 +15,27 @@ import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import {getUserLanguagePref, registerForPushNotificationsAsync} from "../services/UserService";
 import i18n from "../services/i18n";
+import * as Device from "expo-device";
 
 const Tab = createBottomTabNavigator();
 
 export default function UserStack() {
-    const { streetsInfos, setStreetsInfos, setLocation, setErrorMsg, setUpdate, setUpdateNotifications } = useContext(StreetsInfosContext);
+    const { streetsInfos, setStreetsInfos, location, setLocation, setErrorMsg, setUpdate, setUpdateNotifications } = useContext(StreetsInfosContext);
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
     const projectId = Constants.expoConfig.extra.eas.projectId;
     async function getToken() {
-        const token = await Notifications.getExpoPushTokenAsync({
-            projectId
-        });
-        return token.data;
+        if (Device.isDevice) {
+            const token = await Notifications.getExpoPushTokenAsync({
+                projectId
+            });
+
+            return token.data;
+        } else {
+            return '';
+        }
     }
 
     async function checkLangCorrespondence() {
@@ -40,6 +43,12 @@ export default function UserStack() {
         if((languagePref !== undefined || languagePref !== null) && languagePref !== i18n.language) {
             await i18n.changeLanguage(languagePref);
         }
+    }
+
+    async function retrieveAndSendLocation() {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        lamqttClient.publicPosition(location.coords.latitude, location.coords.longitude);
     }
 
     useEffect(() => {
@@ -83,9 +92,9 @@ export default function UserStack() {
             const expoPToken = await getToken();
             let subscriptionStatus = await lamqttClient.subscribeGeofence("parking", new MQTTBaseReceiver(streetsInfos, setStreetsInfos, setUpdate, expoPToken, setUpdateNotifications));
             console.log('SUBSCRIPTION STATUS:', subscriptionStatus);
-            await lamqttClient.publicPosition(44.499789104418404, 11.350433839312743);
+            await lamqttClient.publicPosition(location.coords.latitude, location.coords.longitude);
             setInterval(() => {
-                lamqttClient.publicPosition(44.499789104418404, 11.350433839312743)
+                retrieveAndSendLocation();
             }, 20000);
         })();
     }, []);

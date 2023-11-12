@@ -8,8 +8,7 @@ import {getStatusComponent} from "../services/StreetService";
 import {useTranslation} from "react-i18next";
 
 function Favourites({navigation}){
-    const [favs, setFavs] = useState([])
-    const [filteredFavs, setFilteredFavs] = useState([])
+    const [favs, setFavs] = useState([]);
     const { streetsInfos, updateFavs } = useContext(StreetsInfosContext);
     const { t } = useTranslation();
     function getDotColor(status) {
@@ -54,7 +53,7 @@ function Favourites({navigation}){
         },
         statusDot: {
             backgroundColor: Colors.grey,
-            borderRadius: '50%',
+            borderRadius: 50,
             width: 10,
             height: 10
         },

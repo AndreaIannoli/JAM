@@ -233,6 +233,7 @@ export async function registerForPushNotificationsAsync() {
         console.log(token);
     } else {
         alert('Must use physical device for Push Notifications');
+        return '';
     }
 
     return token.data;
